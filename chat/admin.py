@@ -1,3 +1,11 @@
 from django.contrib import admin
+from django.contrib import admin
+from .models import Chat, Message
 
-# Register your models here.
+class MessageAdmin(admin.ModelAdmin):
+    fields = ('chat', 'text', 'chreated_at', 'author', 'receiver') # Anzeige in der Detailansicht
+    list_display = ('chat','chreated_at', 'author', 'text', 'receiver') # Anzeige in der Übersicht
+    search_fields = ('text',) # Suchfeld
+
+admin.site.register(Message, MessageAdmin)
+admin.site.register(Chat)
