@@ -3,6 +3,7 @@ from .models import Chat, Message
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 @login_required(login_url='/login/') # Leitet dich automatisch zum Login wenn man nicht angemeldet ist.
 
@@ -25,3 +26,7 @@ def login_view(request):
         else:
             return render(request, 'auth/login.html', {'wrongPassword': True, 'redirect': redirect})
     return render(request, 'auth/login.html', {'redirect': redirect})
+
+
+def registration_view(request):
+    user = User.objects.create_user(username='john', email='jlennon@beatles.com', password='glass onion')
