@@ -11,7 +11,8 @@
 
 <form action="/login/" method="POST">
     {% csrf_token %}
-    <input type="hidden" name="redirect" value="{{ redirect }}">
+    <input type="hidden" name="redirect" value="/chat/">
+    <!-- {{ redirect }} -->
 
     <div style="display: flex;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input name="username" class="mdl-textfield__input" type="text" id="sample3">

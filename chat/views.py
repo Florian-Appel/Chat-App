@@ -31,5 +31,9 @@ def login_view(request):
 def registration_view(request):
     if request.method == 'POST':
         user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
-        user.save() # ???
+        user.save()
+        # Weiterleitung nach Registration auf Login Seite
     return render(request, 'auth/registration.html')
+
+
+# Bei der Weiterleitung nach dem Login = fehler (kurzfristig behoben)
