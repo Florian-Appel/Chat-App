@@ -29,4 +29,7 @@ def login_view(request):
 
 
 def registration_view(request):
-    user = User.objects.create_user(username='john', email='jlennon@beatles.com', password='glass onion')
+    if request.method == 'POST':
+        user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
+        user.save() # ???
+    return render(request, 'auth/registration.html')
