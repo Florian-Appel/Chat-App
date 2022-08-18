@@ -3,18 +3,52 @@
 
 {% if request.user.is_authenticated %}
 
-{% for message in messages %}
-<div>
-    <span style="color: lightgray">[{{message.chreated_at}}]</span> {{message.author}}: {{ message.text }}
+<div id="messageContainer">
+    {% for message in messages %}
+    <div>
+        <span style="color: lightgray">[{{message.chreated_at}}]</span> {{message.author}}: <i>{{ message.text }}</i>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
 
+<script>
+    async function sendMessage() {
+        let fd = new FormData();
+        let token = '{{ csrf_token }}';
+        fd.append('textmessage', messageField.value);
+        fd.append('csrfmiddlewaretoken', token);
+        try {
+            messageContainer.innerHTML += `
+                <div id="deleteMessage">
+                    <span style="color: lightgray">[DATUM]</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
+                </div>
+            `;
 
-<form action="/chat/" method="post">
+            await fetch('/chat/', {
+                method: 'POST',
+                body: fd
+            });
+            console.log('Sucess!')
+
+            document.getElementById('deleteMessage').remove();
+
+            messageContainer.innerHTML += `
+                <div>
+                    <span style="color: lightgray">[DATUM]</span> {{request.user}}: <i>${messageField.value}</i>
+                </div>
+            `;
+
+        } catch (e) {
+            console.log('ERROR!', e)
+        }
+    }
+</script>
+
+<form onsubmit="sendMessage(); return false;" method="post">
     {% csrf_token %}
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input name="textmessage" class="mdl-textfield__input" type="text" id="sample3">
-        <label class="mdl-textfield__label" for="sample3">message...</label>
+        <input name="textmessage" class="mdl-textfield__input" type="text" id="messageField">
+        <label class="mdl-textfield__label" for="messageField">message...</label>
     </div>
 
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
