@@ -29,11 +29,9 @@ def login_view(request):
 
 
 def registration_view(request):
+    redirect = request.GET.get('next')
     if request.method == 'POST':
         user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
         user.save()
-        # Weiterleitung nach Registration auf Login Seite
-    return render(request, 'auth/registration.html')
-
-
-# Bei der Weiterleitung nach dem Login = fehler (kurzfristig behoben)
+        return HttpResponseRedirect(request.POST.get('redirect'))
+    return render(request, 'auth/registration.html', {'redirect': redirect})
