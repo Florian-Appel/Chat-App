@@ -12,6 +12,17 @@
 </div>
 
 <script>
+
+    
+
+
+    function formatAMPM() {
+        var d = new Date(),
+            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        return months[d.getMonth()] + '. ' + d.getDate() + ', ' + d.getFullYear();
+    }
+
+
     async function sendMessage() {
         let fd = new FormData();
         let token = '{{ csrf_token }}';
@@ -20,7 +31,7 @@
         try {
             messageContainer.innerHTML += `
                 <div id="deleteMessage">
-                    <span style="color: lightgray">[DATUM]</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
+                    <span style="color: lightgray" id="test">[${formatAMPM()}]</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
                 </div>
             `;
 
@@ -34,7 +45,7 @@
 
             messageContainer.innerHTML += `
                 <div>
-                    <span style="color: lightgray">[DATUM]</span> {{request.user}}: <i>${messageField.value}</i>
+                    <span style="color: lightgray">[${formatAMPM()}]</span> {{request.user}}: <i>${messageField.value}</i>
                 </div>
             `;
 
@@ -42,6 +53,7 @@
             console.log('ERROR!', e)
         }
     }
+
 </script>
 
 <form onsubmit="sendMessage(); return false;" method="post">
@@ -54,6 +66,8 @@
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Send
     </button>
+
+    <div id="test"></div>
 </form>
 {% else %}
 <h2>Nicht eingeloggt</h2>
