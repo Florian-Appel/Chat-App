@@ -7,11 +7,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core import serializers
 
-@login_required(login_url='/login/') # Leitet dich automatisch zum Login wenn man nicht angemeldet ist.
+@login_required(login_url='/login/')
 
 def index(request):
     if request.method == 'POST':
-        print("received data" + request.POST['textmessage'])
         myChat = Chat.objects.get(id=1)
         new_message = Message.objects.create(text=request.POST['textmessage'], chat = myChat, author = request.user, receiver = request.user)
         serializers_obj = serializers.serialize('json', [new_message])

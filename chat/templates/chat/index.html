@@ -5,16 +5,47 @@
 
 <div id="messageContainer">
     {% for message in messages %}
-    <div>
-        <span style="color: lightgray">[{{message.chreated_at}}]</span> {{message.author}}: <i>{{ message.text }}</i>
+    <div class="box">
+        <div class="message-bubble">
+            <span style="color: lightgray">[{{message.chreated_at}}]     .</span> {{message.author}}: <i>{{ message.text }}</i>
+        </div>
+        <div>
+            <img src="/static/img/check(1).png">
+        </div>
     </div>
     {% endfor %}
 </div>
 
+<style>
+    .message-bubble {
+        display: flex;
+        padding: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: fit-content;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    html {
+        line-height: 1.5;
+        font-weight: 300;
+        color: #192229;
+        background: linear-gradient(135deg, #F4F2F3, #BFC6D0);
+    }
+
+    .box {
+        display: flex;
+        align-items: center;
+    }
+
+    .box img {
+        width: 18px;
+        margin-left: 5px;
+    }
+</style>
+
 <script>
-
-    
-
 
     function formatAMPM() {
         var d = new Date(),
@@ -28,14 +59,15 @@
         let token = '{{ csrf_token }}';
         fd.append('textmessage', messageField.value);
         fd.append('csrfmiddlewaretoken', token);
+        
         try {
             messageContainer.innerHTML += `
-                <div id="deleteMessage">
-                    <span style="color: lightgray" id="test">[${formatAMPM()}]</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
+                <div id="deleteMessage" class="message-bubble">
+                    <span style="color: lightgray" id="test">[${formatAMPM()}]     .</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
                 </div>
             `;
 
-             let response = await fetch('/chat/', {
+            let response = await fetch('/chat/', {
                 method: 'POST',
                 body: fd
             });
@@ -44,32 +76,42 @@
             console.log(json);
 
             document.getElementById('deleteMessage').remove();
+            
 
             messageContainer.innerHTML += `
-                <div>
-                    <span style="color: lightgray">[${formatAMPM()}]</span> {{request.user}}: <i>${messageField.value}</i>
+                <div class="box">
+                    <div class="message-bubble">
+                        <span style="color: lightgray">[${formatAMPM()}]     .</span> {{request.user}}: <i>${messageField.value}</i> 
+                    </div>
+                    <div>
+                        <img src="/static/img/check(1).png">
+                    </div>
                 </div>
             `;
+            messageField.value = '';
 
         } catch (e) {
             console.log('ERROR!', e)
         }
+
     }
 
 </script>
 
-<form onsubmit="sendMessage(); return false;" method="post">
+<form onsubmit="sendMessage(); return false;" method="post" style="margin-top: 30px;">
     {% csrf_token %}
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input name="textmessage" class="mdl-textfield__input" type="text" id="messageField">
         <label class="mdl-textfield__label" for="messageField">message...</label>
     </div>
 
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    <button onclick="clear()"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Send
     </button>
 
     <div id="test"></div>
+
 </form>
 {% else %}
 <h2>Nicht eingeloggt</h2>
