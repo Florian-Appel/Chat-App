@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Chat, Message
 from django.http.response import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -10,6 +10,9 @@ from django.core import serializers
 @login_required(login_url='/login/')
 
 def index(request):
+    """
+    This is a view for render Chat
+    """
     if request.method == 'POST':
         myChat = Chat.objects.get(id=1)
         new_message = Message.objects.create(text=request.POST['textmessage'], chat = myChat, author = request.user, receiver = request.user)
@@ -20,6 +23,9 @@ def index(request):
 
 
 def login_view(request):
+    """
+    This is a view for the Login Page
+    """
     redirect = request.GET.get('next')
     if request.method == 'POST':
         user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
@@ -32,9 +38,20 @@ def login_view(request):
 
 
 def registration_view(request):
+    """
+    This is a view for the Register Page
+    """
     redirect = request.GET.get('next')
     if request.method == 'POST':
         user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
         user.save()
         return HttpResponseRedirect(request.POST.get('redirect'))
     return render(request, 'auth/registration.html', {'redirect': redirect})
+
+
+def logout_view(request):
+    """
+    This is a view for the Logout
+    """
+    logout(request)
+    return HttpResponseRedirect('/login')
