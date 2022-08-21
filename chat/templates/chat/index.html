@@ -17,32 +17,7 @@
 </div>
 
 <style>
-    .message-bubble {
-        display: flex;
-        padding: 5px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        width: fit-content;
-        border-radius: 10px;
-        background-color: white;
-    }
 
-    html {
-        line-height: 1.5;
-        font-weight: 300;
-        color: #192229;
-        background: linear-gradient(135deg, #F4F2F3, #BFC6D0);
-    }
-
-    .box {
-        display: flex;
-        align-items: center;
-    }
-
-    .box img {
-        width: 18px;
-        margin-left: 5px;
-    }
 </style>
 
 <script>
@@ -71,7 +46,6 @@
                 method: 'POST',
                 body: fd
             });
-            console.log('Sucess!')
             let json = await response.json();
             console.log(json);
 

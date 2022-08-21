@@ -11,7 +11,7 @@ from django.core import serializers
 
 def index(request):
     """
-    This is a view for render Chat
+    This is the view for render Chat
     """
     if request.method == 'POST':
         myChat = Chat.objects.get(id=1)
@@ -24,7 +24,7 @@ def index(request):
 
 def login_view(request):
     """
-    This is a view for the Login Page
+    This is the view for the Login Page
     """
     redirect = request.GET.get('next')
     if request.method == 'POST':
@@ -39,7 +39,7 @@ def login_view(request):
 
 def registration_view(request):
     """
-    This is a view for the Register Page
+    This is the view for the Register Page
     """
     redirect = request.GET.get('next')
     if request.method == 'POST':
@@ -51,7 +51,7 @@ def registration_view(request):
 
 def logout_view(request):
     """
-    This is a view for the Logout
+    This is the view for the Logout
     """
     logout(request)
     return HttpResponseRedirect('/login')
