@@ -43,9 +43,13 @@ def registration_view(request):
     """
     redirect = request.GET.get('next')
     if request.method == 'POST':
-        user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
-        user.save()
-        return HttpResponseRedirect(request.POST.get('redirect'))
+        try:
+            
+            user = User.objects.create_user(username=request.POST.get('register-username'), password=request.POST.get('register-password'))
+            user.save()
+            return HttpResponseRedirect(request.POST.get('redirect'))
+        except:
+            return render(request, 'auth/registration.html', {'redirect': redirect, 'error': 'Benutzer konnte nicht angelegt werden'})
     return render(request, 'auth/registration.html', {'redirect': redirect})
 
 
