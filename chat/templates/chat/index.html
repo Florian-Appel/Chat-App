@@ -7,7 +7,7 @@
     {% for message in messages %}
     <div class="box">
         <div class="message-bubble">
-            <span style="color: lightgray">[{{message.chreated_at}}]     .</span> {{message.author}}: <i>{{ message.text }}</i>
+            <span style="color: lightgray">[{{message.chreated_at}}]     .</span> <b style="color: blue;">{{message.author}}</b>: {{ message.text }}
         </div>
         <div>
             <img src="/static/img/check(1).png">
@@ -38,7 +38,7 @@
         try {
             messageContainer.innerHTML += `
                 <div id="deleteMessage" class="message-bubble">
-                    <span style="color: lightgray" id="test">[${formatAMPM()}]     .</span> {{request.user}}: <i style="color: darkgray">${messageField.value}</i>
+                    <span style="color: lightgray" id="test">[${formatAMPM()}]     .</span> <b>{{request.user}}</b>: ${messageField.value}
                 </div>
             `;
 
@@ -55,7 +55,7 @@
             messageContainer.innerHTML += `
                 <div class="box">
                     <div class="message-bubble">
-                        <span style="color: lightgray">[${formatAMPM()}]     .</span> {{request.user}}: <i>${messageField.value}</i> 
+                        <span style="color: lightgray">[${formatAMPM()}]     .</span> <b>{{request.user}}</b>: ${messageField.value}
                     </div>
                     <div>
                         <img src="/static/img/check(1).png">
