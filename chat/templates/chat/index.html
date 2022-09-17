@@ -38,7 +38,7 @@
         try {
             messageContainer.innerHTML += `
                 <div id="deleteMessage" class="message-bubble">
-                    <span style="color: lightgray" id="test">[${formatAMPM()}]     .</span> <b>{{request.user}}</b>: ${messageField.value}
+                    <span style="color: lightgray" id="test">[${formatAMPM()}]     .</span> <b style="color: blue;">{{request.user}}</b>: ${messageField.value}
                 </div>
             `;
 
@@ -55,7 +55,7 @@
             messageContainer.innerHTML += `
                 <div class="box">
                     <div class="message-bubble">
-                        <span style="color: lightgray">[${formatAMPM()}]     .</span> <b>{{request.user}}</b>: ${messageField.value}
+                        <span style="color: lightgray">[${formatAMPM()}]     .</span> <b style="color: blue;">{{request.user}}</b>: ${messageField.value}
                     </div>
                     <div>
                         <img src="/static/img/check(1).png">
