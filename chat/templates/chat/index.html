@@ -7,7 +7,8 @@
     {% for message in messages %}
     <div class="box">
         <div class="message-bubble">
-            <span style="color: lightgray">[{{message.chreated_at}}]    .</span> <b style="color: blue;">{{message.author}}</b>: {{ message.text }}
+            <span style="color: lightgray">[{{message.chreated_at}}] .</span> <b
+                style="color: blue;">{{message.author}}</b>: {{ message.text }}
         </div>
         <div>
             <img src="/static/img/check(1).png">
@@ -34,7 +35,7 @@
         let token = '{{ csrf_token }}';
         fd.append('textmessage', messageField.value);
         fd.append('csrfmiddlewaretoken', token);
-        
+
         try {
             messageContainer.innerHTML += `
                 <div id="deleteMessage" class="message-bubble">
@@ -42,15 +43,17 @@
                 </div>
             `;
 
-            let response = await fetch('/chat/', {
+
+            let response = fetch('/chat/', {
                 method: 'POST',
                 body: fd
             });
-            let json = await response.json();
+            let json = response.json();
+
             console.log(json);
 
             document.getElementById('deleteMessage').remove();
-            
+
 
             messageContainer.innerHTML += `
                 <div class="box">
@@ -93,3 +96,6 @@
 {% endif %}
 
 {% endblock %}
+
+
+<!-- Du lädst die Nachrichten über eine API mit dem fetch()  Befehl in JavaScript. Dieses fetch() kannst du alle paar Sekunden mit einem setInterval()  ausführen. Der Chat aktualisiert sich damit alle paar Sekunden automatisch. -->
