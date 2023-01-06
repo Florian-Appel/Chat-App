@@ -122,6 +122,7 @@ USE_TZ = True
 This is for connect the static file with the project.
 """
 
+STATIC_ROOT = '/home/FlorianAppel1/Django-Chat-App/static'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
